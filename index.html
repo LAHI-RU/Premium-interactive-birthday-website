@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Secret Just For You 🌙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================
+       CANVAS: Particle background (shared across scenes)
+  ============================================ -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- ============================================
+       SCENE 1: Entry Gate / Password Screen
+  ============================================ -->
+  <section id="scene-entry" class="scene active">
+    <div class="entry-inner">
+      <!-- Decorative ring orbits -->
+      <div class="orbit-ring ring-1"></div>
+      <div class="orbit-ring ring-2"></div>
+      <div class="orbit-ring ring-3"></div>
+
+      <div class="entry-card glass">
+        <div class="lock-icon" id="lock-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect class="lock-body" x="8" y="22" width="32" height="22" rx="4" stroke="currentColor" stroke-width="2"/>
+            <path class="lock-shackle" d="M16 22V16a8 8 0 0116 0v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle class="lock-keyhole" cx="24" cy="33" r="3" fill="currentColor"/>
+            <line class="lock-keyhole-line" x1="24" y1="36" x2="24" y2="40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <p class="entry-eyebrow">A secret, just for you</p>
+        <h1 class="entry-title">Only one heart<br/><em>knows the word…</em></h1>
+        <p class="entry-hint">Whisper it below</p>
+
+        <div class="input-wrapper" id="input-wrapper">
+          <input
+            type="password"
+            id="password-input"
+            placeholder="your magic word"
+            autocomplete="off"
+            spellcheck="false"
+            maxlength="30"
+          />
+          <div class="input-glow"></div>
+          <button id="enter-btn" aria-label="Enter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <p class="entry-error" id="entry-error">That's not quite right, love ✦</p>
+
+        <!-- Hidden Easter egg trigger -->
+        <p class="entry-footer">
+          Press <span id="easter-trigger" class="easter-trigger">✦</span> for a hint
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SCENE 2: Birthday Reveal
+  ============================================ -->
+  <section id="scene-reveal" class="scene">
+    <div class="reveal-inner">
+
+      <!-- Sound toggle -->
+      <button class="sound-btn" id="sound-btn" aria-label="Toggle music">
+        <span class="sound-icon on">♪</span>
+        <span class="sound-icon off" style="display:none">♩</span>
+      </button>
+
+      <!-- Floating hearts decoration -->
+      <div class="floating-hearts" id="floating-hearts"></div>
+
+      <div class="reveal-content">
+        <p class="reveal-eyebrow">Today, the universe celebrates</p>
+        <h2 class="reveal-title" id="reveal-title">
+          Happy Birthday
+          <span class="title-heart">❤</span>
+        </h2>
+
+        <!-- Typewriter message -->
+        <div class="typewriter-container">
+          <p class="typewriter-text" id="typewriter-text"></p>
+          <span class="typewriter-cursor">|</span>
+        </div>
+
+        <button class="cta-btn" id="goto-gifts-btn">
+          <span>Open Your Gifts</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SCENE 3: Gift Selection
+  ============================================ -->
+  <section id="scene-gifts" class="scene">
+    <div class="gifts-inner">
+      <p class="gifts-eyebrow">Three little mysteries…</p>
+      <h2 class="gifts-title">Choose your gifts</h2>
+      <p class="gifts-subtitle">Each one holds something from the heart</p>
+
+      <div class="gifts-grid" id="gifts-grid">
+
+        <!-- Gift 1: Heartfelt message -->
+        <div class="gift-card" id="gift-1" data-gift="1">
+          <div class="gift-card-inner">
+            <!-- Front face -->
+            <div class="gift-face gift-front">
+              <div class="gift-ribbon gift-ribbon-v"></div>
+              <div class="gift-ribbon gift-ribbon-h"></div>
+              <div class="gift-bow">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="gift-number">I</div>
+              <p class="gift-label">A Word From<br/>the Heart</p>
+            </div>
+            <!-- Back face (reveal) -->
+            <div class="gift-face gift-back">
+              <div class="gift-back-content">
+                <div class="gift-back-icon">💌</div>
+                <p class="gift-back-text">
+                  "Every morning you exist in this world is a gift the universe gave me. 
+                  Loving you isn't something I do — it's something I've become."
+                </p>
+                <span class="gift-back-signature">— Always yours</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift 2: Memory / Gallery -->
+        <div class="gift-card gift-card--center" id="gift-2" data-gift="2">
+          <div class="gift-card-inner">
+            <div class="gift-face gift-front">
+              <div class="gift-ribbon gift-ribbon-v"></div>
+              <div class="gift-ribbon gift-ribbon-h"></div>
+              <div class="gift-bow">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="gift-number">II</div>
+              <p class="gift-label">A Memory<br/>We Made</p>
+            </div>
+            <div class="gift-face gift-back">
+              <div class="gift-back-content">
+                <div class="gift-memory-gallery">
+                  <!-- Replace src with real photo paths -->
+                  <div class="memory-frame memory-frame-1">
+                    <div class="memory-placeholder">📸<br/><small>Your favourite memory</small></div>
+                  </div>
+                  <div class="memory-frame memory-frame-2">
+                    <div class="memory-placeholder">📸<br/><small>Place your photo here</small></div>
+                  </div>
+                </div>
+                <p class="gift-back-text gift-back-text--sm">
+                  "These moments live in me forever. Every laugh, every glance, every quiet second beside you."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift 3: Promise note -->
+        <div class="gift-card" id="gift-3" data-gift="3">
+          <div class="gift-card-inner">
+            <div class="gift-face gift-front">
+              <div class="gift-ribbon gift-ribbon-v"></div>
+              <div class="gift-ribbon gift-ribbon-h"></div>
+              <div class="gift-bow">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="gift-number">III</div>
+              <p class="gift-label">A Promise<br/>Just for You</p>
+            </div>
+            <div class="gift-face gift-back">
+              <div class="gift-back-content">
+                <div class="gift-back-icon">🌙</div>
+                <ul class="promise-list">
+                  <li>✦ To hold your hand on every hard day</li>
+                  <li>✦ To celebrate every tiny victory</li>
+                  <li>✦ To choose you, always</li>
+                  <li>✦ To make next year even more magical</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Progress tracker -->
+      <div class="gift-progress" id="gift-progress">
+        <span class="progress-dot" id="dot-1"></span>
+        <span class="progress-dot" id="dot-2"></span>
+        <span class="progress-dot" id="dot-3"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SCENE 4: Final Surprise / Fireworks
+  ============================================ -->
+  <section id="scene-finale" class="scene">
+    <canvas id="fireworks-canvas"></canvas>
+    <div class="finale-inner">
+      <div class="finale-content glass">
+        <div class="finale-stars" id="finale-stars"></div>
+        <p class="finale-eyebrow">And now, the most important thing…</p>
+        <h2 class="finale-title">You are<br/><em>extraordinary.</em></h2>
+        <p class="finale-message">
+          Not just today. Every single day.<br/>
+          The world is so much more beautiful because you're in it.<br/>
+          <strong>Happy Birthday, my love. 🌹</strong>
+        </p>
+        <button class="cta-btn cta-btn--light" id="replay-btn">
+          <span>Relive the magic</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       EASTER EGG MODAL
+  ============================================ -->
+  <div class="easter-modal" id="easter-modal">
+    <div class="easter-modal-inner glass">
+      <button class="easter-close" id="easter-close">✕</button>
+      <p class="easter-emoji">🌹</p>
+      <p class="easter-text">Hint: it's the name she loves to hear you call her…</p>
+    </div>
+  </div>
+
+  <!-- Audio element (silent by default, src can be a hosted mp3) -->
+  <audio id="bg-music" loop>
+    <!-- Replace with your own .mp3 URL -->
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
