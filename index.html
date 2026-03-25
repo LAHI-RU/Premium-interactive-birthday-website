@@ -3,254 +3,243 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Secret Just For You 🌙</title>
+  <meta name="description" content="A premium birthday experience for Kanchi with music, photos, illustration, and one special gift choice." />
+  <title>Kanchi's Birthday Experience</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <!-- ============================================
-       CANVAS: Particle background (shared across scenes)
-  ============================================ -->
-  <canvas id="particle-canvas"></canvas>
-
-  <!-- ============================================
-       SCENE 1: Entry Gate / Password Screen
-  ============================================ -->
-  <section id="scene-entry" class="scene active">
-    <div class="entry-inner">
-      <!-- Decorative ring orbits -->
-      <div class="orbit-ring ring-1"></div>
-      <div class="orbit-ring ring-2"></div>
-      <div class="orbit-ring ring-3"></div>
-
-      <div class="entry-card glass">
-        <div class="lock-icon" id="lock-icon">
-          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect class="lock-body" x="8" y="22" width="32" height="22" rx="4" stroke="currentColor" stroke-width="2"/>
-            <path class="lock-shackle" d="M16 22V16a8 8 0 0116 0v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <circle class="lock-keyhole" cx="24" cy="33" r="3" fill="currentColor"/>
-            <line class="lock-keyhole-line" x1="24" y1="36" x2="24" y2="40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-
-        <p class="entry-eyebrow">A secret, just for you</p>
-        <h1 class="entry-title">Only one heart<br/><em>knows the word…</em></h1>
-        <p class="entry-hint">Whisper it below</p>
-
-        <div class="input-wrapper" id="input-wrapper">
-          <input
-            type="password"
-            id="password-input"
-            placeholder="your magic word"
-            autocomplete="off"
-            spellcheck="false"
-            maxlength="30"
-          />
-          <div class="input-glow"></div>
-          <button id="enter-btn" aria-label="Enter">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-
-        <p class="entry-error" id="entry-error">That's not quite right, love ✦</p>
-
-        <!-- Hidden Easter egg trigger -->
-        <p class="entry-footer">
-          Press <span id="easter-trigger" class="easter-trigger">✦</span> for a hint
-        </p>
-      </div>
+  <div class="video-backdrop" aria-hidden="true">
+    <div class="video-backdrop__stage">
+      <video
+        id="bg-video"
+        class="video-backdrop__media"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+        poster="assets/pic1.jpeg"
+      >
+        <source src="assets/background.mp4" type="video/mp4" />
+      </video>
     </div>
-  </section>
-
-  <!-- ============================================
-       SCENE 2: Birthday Reveal
-  ============================================ -->
-  <section id="scene-reveal" class="scene">
-    <div class="reveal-inner">
-
-      <!-- Sound toggle -->
-      <button class="sound-btn" id="sound-btn" aria-label="Toggle music">
-        <span class="sound-icon on">♪</span>
-        <span class="sound-icon off" style="display:none">♩</span>
-      </button>
-
-      <!-- Floating hearts decoration -->
-      <div class="floating-hearts" id="floating-hearts"></div>
-
-      <div class="reveal-content">
-        <p class="reveal-eyebrow">Today, the universe celebrates</p>
-        <h2 class="reveal-title" id="reveal-title">
-          Happy Birthday
-          <span class="title-heart">❤</span>
-        </h2>
-
-        <!-- Typewriter message -->
-        <div class="typewriter-container">
-          <p class="typewriter-text" id="typewriter-text"></p>
-          <span class="typewriter-cursor">|</span>
-        </div>
-
-        <button class="cta-btn" id="goto-gifts-btn">
-          <span>Open Your Gifts</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================
-       SCENE 3: Gift Selection
-  ============================================ -->
-  <section id="scene-gifts" class="scene">
-    <div class="gifts-inner">
-      <p class="gifts-eyebrow">Three little mysteries…</p>
-      <h2 class="gifts-title">Choose your gifts</h2>
-      <p class="gifts-subtitle">Each one holds something from the heart</p>
-
-      <div class="gifts-grid" id="gifts-grid">
-
-        <!-- Gift 1: Heartfelt message -->
-        <div class="gift-card" id="gift-1" data-gift="1">
-          <div class="gift-card-inner">
-            <!-- Front face -->
-            <div class="gift-face gift-front">
-              <div class="gift-ribbon gift-ribbon-v"></div>
-              <div class="gift-ribbon gift-ribbon-h"></div>
-              <div class="gift-bow">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <div class="gift-number">I</div>
-              <p class="gift-label">A Word From<br/>the Heart</p>
-            </div>
-            <!-- Back face (reveal) -->
-            <div class="gift-face gift-back">
-              <div class="gift-back-content">
-                <div class="gift-back-icon">💌</div>
-                <p class="gift-back-text">
-                  "Every morning you exist in this world is a gift the universe gave me. 
-                  Loving you isn't something I do — it's something I've become."
-                </p>
-                <span class="gift-back-signature">— Always yours</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Gift 2: Memory / Gallery -->
-        <div class="gift-card gift-card--center" id="gift-2" data-gift="2">
-          <div class="gift-card-inner">
-            <div class="gift-face gift-front">
-              <div class="gift-ribbon gift-ribbon-v"></div>
-              <div class="gift-ribbon gift-ribbon-h"></div>
-              <div class="gift-bow">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <div class="gift-number">II</div>
-              <p class="gift-label">A Memory<br/>We Made</p>
-            </div>
-            <div class="gift-face gift-back">
-              <div class="gift-back-content">
-                <div class="gift-memory-gallery">
-                  <!-- Replace src with real photo paths -->
-                  <div class="memory-frame memory-frame-1">
-                    <div class="memory-placeholder">📸<br/><small>Your favourite memory</small></div>
-                  </div>
-                  <div class="memory-frame memory-frame-2">
-                    <div class="memory-placeholder">📸<br/><small>Place your photo here</small></div>
-                  </div>
-                </div>
-                <p class="gift-back-text gift-back-text--sm">
-                  "These moments live in me forever. Every laugh, every glance, every quiet second beside you."
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Gift 3: Promise note -->
-        <div class="gift-card" id="gift-3" data-gift="3">
-          <div class="gift-card-inner">
-            <div class="gift-face gift-front">
-              <div class="gift-ribbon gift-ribbon-v"></div>
-              <div class="gift-ribbon gift-ribbon-h"></div>
-              <div class="gift-bow">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <div class="gift-number">III</div>
-              <p class="gift-label">A Promise<br/>Just for You</p>
-            </div>
-            <div class="gift-face gift-back">
-              <div class="gift-back-content">
-                <div class="gift-back-icon">🌙</div>
-                <ul class="promise-list">
-                  <li>✦ To hold your hand on every hard day</li>
-                  <li>✦ To celebrate every tiny victory</li>
-                  <li>✦ To choose you, always</li>
-                  <li>✦ To make next year even more magical</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Progress tracker -->
-      <div class="gift-progress" id="gift-progress">
-        <span class="progress-dot" id="dot-1"></span>
-        <span class="progress-dot" id="dot-2"></span>
-        <span class="progress-dot" id="dot-3"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================
-       SCENE 4: Final Surprise / Fireworks
-  ============================================ -->
-  <section id="scene-finale" class="scene">
-    <canvas id="fireworks-canvas"></canvas>
-    <div class="finale-inner">
-      <div class="finale-content glass">
-        <div class="finale-stars" id="finale-stars"></div>
-        <p class="finale-eyebrow">And now, the most important thing…</p>
-        <h2 class="finale-title">You are<br/><em>extraordinary.</em></h2>
-        <p class="finale-message">
-          Not just today. Every single day.<br/>
-          The world is so much more beautiful because you're in it.<br/>
-          <strong>Happy Birthday, my love. 🌹</strong>
-        </p>
-        <button class="cta-btn cta-btn--light" id="replay-btn">
-          <span>Relive the magic</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================
-       EASTER EGG MODAL
-  ============================================ -->
-  <div class="easter-modal" id="easter-modal">
-    <div class="easter-modal-inner glass">
-      <button class="easter-close" id="easter-close">✕</button>
-      <p class="easter-emoji">🌹</p>
-      <p class="easter-text">Hint: it's the name she loves to hear you call her…</p>
-    </div>
+    <div class="video-backdrop__overlay"></div>
+    <div class="video-backdrop__glow"></div>
   </div>
 
-  <!-- Audio element (silent by default, src can be a hosted mp3) -->
-  <audio id="bg-music" loop>
-    <!-- Replace with your own .mp3 URL -->
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="noise-layer" aria-hidden="true"></div>
+  <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
+
+  <button class="sound-btn" id="sound-btn" type="button" aria-label="Toggle birthday song" aria-pressed="false">
+    <span class="sound-btn__icon" id="sound-icon">Sound On</span>
+  </button>
+
+  <main class="experience">
+    <section id="scene-entry" class="scene active" aria-label="Open the birthday wish">
+      <div class="scene-shell scene-shell--entry">
+        <div class="entry-stage panel">
+          <div class="entry-copy">
+            <div class="entry-topline">
+              <p class="eyebrow">Private Birthday Delivery</p>
+              <span class="entry-chip">For Kanchi</span>
+            </div>
+
+            <h1 class="hero-title">A cinematic birthday experience, designed only for Kanchi.</h1>
+            <p class="hero-copy">
+              Open this with the right word and the full surprise appears with your song, your photos, your illustration, and one gift to choose from three.
+            </p>
+
+            <div class="entry-form">
+              <label class="sr-only" for="password-input">Enter the secret word</label>
+              <input
+                id="password-input"
+                class="entry-input"
+                type="password"
+                placeholder="Enter the secret word"
+                autocomplete="off"
+                spellcheck="false"
+                maxlength="32"
+              />
+              <button id="enter-btn" class="primary-btn" type="button">Open the wish</button>
+            </div>
+
+            <p id="entry-error" class="entry-error" aria-live="polite"></p>
+
+            <div class="entry-footer">
+              <p class="entry-hint">Hint: use the word that feels the most personal between you and Kanchi.</p>
+              <div class="entry-points">
+                <span>Background video</span>
+                <span>Birthday song</span>
+                <span>One gift choice</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="entry-artboard">
+            <div class="entry-photo-grid">
+              <figure class="entry-photo entry-photo--wide">
+                <img src="assets/pic2.jpeg" alt="A smiling photo of Kanchi and me together" />
+                <figcaption>One of our favorite smiles</figcaption>
+              </figure>
+
+              <figure class="entry-photo entry-photo--portrait">
+                <img src="assets/pic3.jpeg" alt="Kanchi dressed beautifully in pink at a decorated doorway" />
+                <figcaption>Birthday elegance</figcaption>
+              </figure>
+
+              <div class="entry-note panel">
+                <p class="entry-note__label">Inside this wish</p>
+                <p class="entry-note__title">A more complete birthday moment.</p>
+                <p class="entry-note__copy">
+                  Cleaner structure, stronger art direction, and a more premium reveal for desktop and mobile.
+                </p>
+              </div>
+            </div>
+
+            <figure class="entry-badge panel">
+              <img src="assets/pic1.jpeg" alt="Illustrated portrait of Kanchi and me together" />
+              <figcaption>
+                <p class="entry-badge__title">Illustrated edition</p>
+                <p class="entry-badge__copy">A soft little version of us, included in the surprise.</p>
+              </figcaption>
+            </figure>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-reveal" class="scene" aria-label="Birthday reveal">
+      <div class="scene-shell scene-shell--reveal">
+        <div class="reveal-stage">
+          <div class="reveal-media">
+            <figure class="reveal-hero panel">
+              <img src="assets/pic1.jpeg" alt="Illustrated portrait of Kanchi and me together" />
+              <figcaption>
+                <p class="reveal-media__title">Our illustration</p>
+                <p class="reveal-media__copy">A softer portrait of us, held inside your birthday reveal.</p>
+              </figcaption>
+            </figure>
+
+            <div class="reveal-strip">
+              <figure class="reveal-strip__item">
+                <img src="assets/pic2.jpeg" alt="A real-life photo of Kanchi and me smiling together" />
+              </figure>
+              <figure class="reveal-strip__item">
+                <img src="assets/pic3.jpeg" alt="Kanchi standing beautifully in a pink saree" />
+              </figure>
+            </div>
+          </div>
+
+          <div class="reveal-copy panel">
+            <p class="eyebrow">For The Birthday Girl</p>
+            <h2 class="hero-title hero-title--reveal">Happy Birthday, <span id="recipient-name">Kanchi</span>.</h2>
+            <p class="hero-copy hero-copy--reveal">
+              This was made to feel personal from the first second. Not just a message, but a whole atmosphere built around your day.
+            </p>
+
+            <div class="message-stack" id="message-stack">
+              <p class="message-line">You make ordinary days feel warmer, lighter, and more alive.</p>
+              <p class="message-line">So your birthday deserved more than a basic wish on a screen.</p>
+              <p class="message-line">It deserved something that looked intentional and felt like you.</p>
+            </div>
+
+            <div class="status-row">
+              <p id="music-status" class="music-status" aria-live="polite">Trying to start the birthday song...</p>
+              <p class="status-chip">Choose only one gift when you are ready.</p>
+            </div>
+
+            <button id="view-gifts-btn" class="primary-btn primary-btn--wide" type="button">Choose your gift</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-gifts" class="scene" aria-label="Choose one gift">
+      <div class="scene-shell scene-shell--gifts">
+        <div class="gifts-stage panel">
+          <div class="section-heading">
+            <p class="eyebrow">Curated For Kanchi</p>
+            <h2 class="section-title">Choose one gift from three.</h2>
+            <p class="section-copy">
+              Each choice gives the birthday a different feeling. Pick the one that feels most like what you want today.
+            </p>
+          </div>
+
+          <div class="gifts-grid">
+            <article class="gift-card" data-gift="letter" tabindex="0" role="button" aria-label="Choose gift one, a letter kept for you">
+              <p class="gift-card__tag">Gift 01</p>
+              <h3 class="gift-card__title">A Letter Kept For You</h3>
+              <p class="gift-card__copy">A birthday letter written properly, with warmth, honesty, admiration, and the things you deserve to hear clearly.</p>
+              <p class="gift-card__meta">Romantic. Personal. Timeless.</p>
+            </article>
+
+            <article class="gift-card" data-gift="portrait" tabindex="0" role="button" aria-label="Choose gift two, our portrait keepsake">
+              <p class="gift-card__tag">Gift 02</p>
+              <h3 class="gift-card__title">Our Portrait Keepsake</h3>
+              <p class="gift-card__copy">A keepsake built around our illustration and photos, turning this birthday into something you can keep emotionally close.</p>
+              <p class="gift-card__meta">Elegant. Visual. Lasting.</p>
+            </article>
+
+            <article class="gift-card" data-gift="date" tabindex="0" role="button" aria-label="Choose gift three, a date designed around you">
+              <p class="gift-card__tag">Gift 03</p>
+              <h3 class="gift-card__title">A Date Designed Around You</h3>
+              <p class="gift-card__copy">A full date shaped around your pace, your cravings, your comfort, and the little details that make you feel celebrated.</p>
+              <p class="gift-card__meta">Thoughtful. Flexible. Memorable.</p>
+            </article>
+          </div>
+
+          <div class="selection-bar">
+            <div>
+              <p class="selection-bar__label">Your current choice</p>
+              <p class="selection-bar__value" id="selection-text">No gift selected yet.</p>
+            </div>
+            <button id="confirm-gift-btn" class="primary-btn" type="button" disabled>Lock this gift</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scene-finale" class="scene" aria-label="Final birthday message">
+      <div class="scene-shell scene-shell--finale">
+        <div class="finale-card panel">
+          <p class="eyebrow">Final Note</p>
+          <h2 class="section-title section-title--finale">Kanchi, you deserve beauty, effort, love, and intention.</h2>
+          <p class="finale-copy">
+            This page is only one reminder of that. The real message is simple: you matter deeply, and your happiness is worth real care.
+          </p>
+
+          <div class="finale-choice" id="finale-choice">
+            <p class="finale-choice__label">Gift selected</p>
+            <p class="finale-choice__value" id="final-gift-title">Waiting for your choice.</p>
+            <p class="finale-choice__copy" id="final-gift-copy"></p>
+          </div>
+
+          <div class="finale-gallery">
+            <figure class="finale-gallery__item">
+              <img src="assets/pic1.jpeg" alt="Illustrated portrait of Kanchi and me" />
+            </figure>
+            <figure class="finale-gallery__item">
+              <img src="assets/pic2.jpeg" alt="Smiling photo of Kanchi and me" />
+            </figure>
+            <figure class="finale-gallery__item">
+              <img src="assets/pic3.jpeg" alt="Kanchi in a pink saree" />
+            </figure>
+          </div>
+
+          <p class="finale-signoff">Happy Birthday, Kanchi.</p>
+          <button id="replay-btn" class="secondary-btn" type="button">Start again</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="bg-music" preload="auto" loop>
+    <source src="assets/happy-birthday-song.mp3" type="audio/mpeg" />
   </audio>
 
   <script src="script.js"></script>
