@@ -3,244 +3,314 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="A premium birthday experience for Kanchi with music, photos, illustration, and one special gift choice." />
-  <title>Kanchi's Birthday Experience</title>
+  <meta name="description" content="Something made only for you." />
+  <title>For You 🌹</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <!-- Floating petals -->
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <!-- Video background -->
   <div class="video-backdrop" aria-hidden="true">
-    <div class="video-backdrop__stage">
-      <video
-        id="bg-video"
-        class="video-backdrop__media"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        disablepictureinpicture
-        poster="assets/pic1.jpeg"
-      >
+    <div class="video-stage">
+      <video id="bg-video" class="video-media" autoplay muted loop playsinline webkit-playsinline preload="auto"
+        poster="assets/pic1.jpeg" disablepictureinpicture disableremoteplayback>
         <source src="assets/background.mp4" type="video/mp4" />
       </video>
     </div>
-    <div class="video-backdrop__overlay"></div>
-    <div class="video-backdrop__glow"></div>
+    <div class="video-overlay"></div>
   </div>
 
+  <!-- Particles -->
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
-  <div class="noise-layer" aria-hidden="true"></div>
+
+  <!-- Grain -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Confetti -->
   <div class="confetti-layer" id="confetti-layer" aria-hidden="true"></div>
 
-  <button class="sound-btn" id="sound-btn" type="button" aria-label="Toggle birthday song" aria-pressed="false">
-    <span class="sound-btn__icon" id="sound-icon">Sound On</span>
+  <!-- Sound toggle -->
+  <button class="sound-btn" id="sound-btn" type="button" aria-label="Toggle music" aria-pressed="false">
+    <span class="sound-pulse" id="sound-pulse"></span>
+    <span id="sound-label">Play Song</span>
   </button>
 
-  <main class="experience">
-    <section id="scene-entry" class="scene active" aria-label="Open the birthday wish">
-      <div class="scene-shell scene-shell--entry">
-        <div class="entry-stage panel">
-          <div class="entry-copy">
-            <div class="entry-topline">
-              <p class="eyebrow">Private Birthday Delivery</p>
-              <span class="entry-chip">For Kanchi</span>
+  <main>
+
+    <!-- ════ SCENE 1: LOCK ════ -->
+    <section id="scene-lock" class="scene active" aria-label="Enter to open">
+      <div class="scene-frame">
+        <div class="lock-wrap">
+
+          <div class="lock-ornament" aria-hidden="true">
+            <div class="lock-birthday">
+              <span class="cake-flame cake-flame--left"></span>
+              <span class="cake-flame cake-flame--center"></span>
+              <span class="cake-flame cake-flame--right"></span>
+              <span class="cake-candle cake-candle--left"></span>
+              <span class="cake-candle cake-candle--center"></span>
+              <span class="cake-candle cake-candle--right"></span>
+              <span class="cake-top"></span>
+              <span class="cake-icing"></span>
+              <span class="cake-base"></span>
+              <span class="cake-plate"></span>
             </div>
+            <div class="rings">
+              <span class="ring r1"></span>
+              <span class="ring r2"></span>
+              <span class="ring r3"></span>
+            </div>
+          </div>
 
-            <h1 class="hero-title">A cinematic birthday experience, designed only for Kanchi.</h1>
-            <p class="hero-copy">
-              Open this with the right word and the full surprise appears with your song, your photos, your illustration, and one gift to choose from three.
-            </p>
+          <div class="lock-text">
+            <p class="eyebrow">Open when you're alone</p>
+            <h1 class="lock-title">
+              I made something<br/>
+              <em>just for you.</em>
+            </h1>
+            <p class="lock-sub">Find our 4-letter word to open it.</p>
+          </div>
 
-            <div class="entry-form">
+          <div class="lock-form">
+            <div class="input-pill" id="input-pill">
               <label class="sr-only" for="password-input">Enter the secret word</label>
-              <input
-                id="password-input"
-                class="entry-input"
-                type="password"
-                placeholder="Enter the secret word"
-                autocomplete="off"
-                spellcheck="false"
-                maxlength="32"
-              />
-              <button id="enter-btn" class="primary-btn" type="button">Open the wish</button>
+              <input id="password-input" type="password"
+                placeholder="our word…"
+                autocomplete="off" spellcheck="false" maxlength="32" />
+              <button id="enter-btn" class="btn-rose" type="button">Open</button>
             </div>
-
             <p id="entry-error" class="entry-error" aria-live="polite"></p>
-
-            <div class="entry-footer">
-              <p class="entry-hint">Hint: use the word that feels the most personal between you and Kanchi.</p>
-              <div class="entry-points">
-                <span>Background video</span>
-                <span>Birthday song</span>
-                <span>One gift choice</span>
-              </div>
-            </div>
+            <p class="lock-hint">Hint: the 4-letter name I always call you 🌹</p>
           </div>
 
-          <aside class="entry-artboard">
-            <div class="entry-photo-grid">
-              <figure class="entry-photo entry-photo--wide">
-                <img src="assets/pic2.jpeg" alt="A smiling photo of Kanchi and me together" />
-                <figcaption>One of our favorite smiles</figcaption>
-              </figure>
-
-              <figure class="entry-photo entry-photo--portrait">
-                <img src="assets/pic3.jpeg" alt="Kanchi dressed beautifully in pink at a decorated doorway" />
-                <figcaption>Birthday elegance</figcaption>
-              </figure>
-
-              <div class="entry-note panel">
-                <p class="entry-note__label">Inside this wish</p>
-                <p class="entry-note__title">A more complete birthday moment.</p>
-                <p class="entry-note__copy">
-                  Cleaner structure, stronger art direction, and a more premium reveal for desktop and mobile.
-                </p>
-              </div>
-            </div>
-
-            <figure class="entry-badge panel">
-              <img src="assets/pic1.jpeg" alt="Illustrated portrait of Kanchi and me together" />
-              <figcaption>
-                <p class="entry-badge__title">Illustrated edition</p>
-                <p class="entry-badge__copy">A soft little version of us, included in the surprise.</p>
-              </figcaption>
-            </figure>
-          </aside>
         </div>
       </div>
     </section>
 
-    <section id="scene-reveal" class="scene" aria-label="Birthday reveal">
-      <div class="scene-shell scene-shell--reveal">
-        <div class="reveal-stage">
-          <div class="reveal-media">
-            <figure class="reveal-hero panel">
-              <img src="assets/pic1.jpeg" alt="Illustrated portrait of Kanchi and me together" />
-              <figcaption>
-                <p class="reveal-media__title">Our illustration</p>
-                <p class="reveal-media__copy">A softer portrait of us, held inside your birthday reveal.</p>
-              </figcaption>
+    <!-- ════ SCENE 2: REVEAL ════ -->
+    <section id="scene-reveal" class="scene" aria-label="Birthday message">
+      <div class="scene-frame">
+        <div class="reveal-layout">
+
+          <div class="reveal-photos" aria-hidden="true">
+            <figure class="photo photo--main">
+              <img src="assets/pic2.jpeg" alt="Us together" loading="lazy" />
             </figure>
-
-            <div class="reveal-strip">
-              <figure class="reveal-strip__item">
-                <img src="assets/pic2.jpeg" alt="A real-life photo of Kanchi and me smiling together" />
-              </figure>
-              <figure class="reveal-strip__item">
-                <img src="assets/pic3.jpeg" alt="Kanchi standing beautifully in a pink saree" />
-              </figure>
-            </div>
+            <figure class="photo photo--side">
+              <img src="assets/pic3.jpeg" alt="You, beautiful" loading="lazy" />
+             
+            </figure>
+            <figure class="photo-badge">
+              <img src="assets/pic1.jpeg" alt="Our little sketch" loading="lazy" />
+            </figure>
           </div>
 
-          <div class="reveal-copy panel">
-            <p class="eyebrow">For The Birthday Girl</p>
-            <h2 class="hero-title hero-title--reveal">Happy Birthday, <span id="recipient-name">Kanchi</span>.</h2>
-            <p class="hero-copy hero-copy--reveal">
-              This was made to feel personal from the first second. Not just a message, but a whole atmosphere built around your day.
-            </p>
+          <div class="reveal-copy">
+            <p class="eyebrow">Happy Birthday</p>
+            <h2 class="reveal-title">
+              You are every<br/>
+              <em>soft thing</em><br/>
+              in my world.
+            </h2>
 
-            <div class="message-stack" id="message-stack">
-              <p class="message-line">You make ordinary days feel warmer, lighter, and more alive.</p>
-              <p class="message-line">So your birthday deserved more than a basic wish on a screen.</p>
-              <p class="message-line">It deserved something that looked intentional and felt like you.</p>
+            <div class="msg-stack" id="msg-stack">
+              <p class="msg">You make ordinary days feel like a gift.</p>
+              <p class="msg">Loving you is the easiest thing I do.</p>
+              <p class="msg">Tonight, I wanted you to feel it.</p>
             </div>
 
-            <div class="status-row">
-              <p id="music-status" class="music-status" aria-live="polite">Trying to start the birthday song...</p>
-              <p class="status-chip">Choose only one gift when you are ready.</p>
+            <div class="music-row">
+              <span class="music-dot" id="music-dot"></span>
+              <span id="music-status" class="music-status">Starting song…</span>
             </div>
 
-            <button id="view-gifts-btn" class="primary-btn primary-btn--wide" type="button">Choose your gift</button>
+            <button id="view-gifts-btn" class="btn-primary" type="button">
+              See your surprise <span aria-hidden="true">→</span>
           </div>
+
         </div>
       </div>
     </section>
 
-    <section id="scene-gifts" class="scene" aria-label="Choose one gift">
-      <div class="scene-shell scene-shell--gifts">
-        <div class="gifts-stage panel">
-          <div class="section-heading">
-            <p class="eyebrow">Curated For Kanchi</p>
-            <h2 class="section-title">Choose one gift from three.</h2>
-            <p class="section-copy">
-              Each choice gives the birthday a different feeling. Pick the one that feels most like what you want today.
-            </p>
+    <!-- ════ SCENE 3: GIFTS ════ -->
+    <section id="scene-gifts" class="scene" aria-label="Choose your surprise">
+      <div class="scene-frame">
+        <div class="gifts-wrap">
+
+          <div class="gifts-header">
+            <p class="eyebrow">A little mystery</p>
+            <h2 class="gifts-title">Three boxes.<br/>One real gift.</h2>
+            <p class="gifts-sub">Only one opens. Choose with your heart.</p>
           </div>
 
           <div class="gifts-grid">
-            <article class="gift-card" data-gift="letter" tabindex="0" role="button" aria-label="Choose gift one, a letter kept for you">
-              <p class="gift-card__tag">Gift 01</p>
-              <h3 class="gift-card__title">A Letter Kept For You</h3>
-              <p class="gift-card__copy">A birthday letter written properly, with warmth, honesty, admiration, and the things you deserve to hear clearly.</p>
-              <p class="gift-card__meta">Romantic. Personal. Timeless.</p>
-            </article>
 
-            <article class="gift-card" data-gift="portrait" tabindex="0" role="button" aria-label="Choose gift two, our portrait keepsake">
-              <p class="gift-card__tag">Gift 02</p>
-              <h3 class="gift-card__title">Our Portrait Keepsake</h3>
-              <p class="gift-card__copy">A keepsake built around our illustration and photos, turning this birthday into something you can keep emotionally close.</p>
-              <p class="gift-card__meta">Elegant. Visual. Lasting.</p>
-            </article>
-
-            <article class="gift-card" data-gift="date" tabindex="0" role="button" aria-label="Choose gift three, a date designed around you">
-              <p class="gift-card__tag">Gift 03</p>
-              <h3 class="gift-card__title">A Date Designed Around You</h3>
-              <p class="gift-card__copy">A full date shaped around your pace, your cravings, your comfort, and the little details that make you feel celebrated.</p>
-              <p class="gift-card__meta">Thoughtful. Flexible. Memorable.</p>
-            </article>
-          </div>
-
-          <div class="selection-bar">
-            <div>
-              <p class="selection-bar__label">Your current choice</p>
-              <p class="selection-bar__value" id="selection-text">No gift selected yet.</p>
+            <div class="gift-box" data-gift="letter" tabindex="0" role="button" aria-pressed="false" aria-label="Gift Box I">
+              <div class="gift-lid">
+                <div class="bow">🎀</div>
+                <div class="ribbon ribbon-v"></div>
+                <div class="ribbon ribbon-h"></div>
+              </div>
+              <div class="gift-body">
+                <p class="gift-num">I</p>
+                <p class="gift-name">Sealed Box</p>
+                <p class="gift-hint">choose one</p>
+              </div>
+              <div class="gift-shine"></div>
             </div>
-            <button id="confirm-gift-btn" class="primary-btn" type="button" disabled>Lock this gift</button>
+
+            <div class="gift-box gift-box--b" data-gift="date" tabindex="0" role="button" aria-pressed="false" aria-label="Gift Box II">
+              <div class="gift-lid">
+                <div class="bow">🎀</div>
+                <div class="ribbon ribbon-v"></div>
+                <div class="ribbon ribbon-h"></div>
+              </div>
+              <div class="gift-body">
+                <p class="gift-num">II</p>
+                <p class="gift-name">Sealed Box</p>
+                <p class="gift-hint">choose one</p>
+              </div>
+              <div class="gift-shine"></div>
+            </div>
+
+            <div class="gift-box gift-box--c" data-gift="promise" tabindex="0" role="button" aria-pressed="false" aria-label="Gift Box III">
+              <div class="gift-lid">
+                <div class="bow">🎀</div>
+                <div class="ribbon ribbon-v"></div>
+                <div class="ribbon ribbon-h"></div>
+              </div>
+              <div class="gift-body">
+                <p class="gift-num">III</p>
+                <p class="gift-name">Sealed Box</p>
+                <p class="gift-hint">choose one</p>
+              </div>
+              <div class="gift-shine"></div>
+            </div>
+
           </div>
+
+          <div class="gifts-bar">
+            <p id="selection-label" class="selection-label">Only one box opens. Choose with your heart.</p>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <section id="scene-finale" class="scene" aria-label="Final birthday message">
-      <div class="scene-shell scene-shell--finale">
-        <div class="finale-card panel">
-          <p class="eyebrow">Final Note</p>
-          <h2 class="section-title section-title--finale">Kanchi, you deserve beauty, effort, love, and intention.</h2>
-          <p class="finale-copy">
-            This page is only one reminder of that. The real message is simple: you matter deeply, and your happiness is worth real care.
-          </p>
+    <!-- ════ SCENE 4: FINALE ════ -->
+    <section id="scene-finale" class="scene" aria-label="Your surprise is revealed">
+      <div class="scene-frame">
+        <div class="finale-wrap">
 
-          <div class="finale-choice" id="finale-choice">
-            <p class="finale-choice__label">Gift selected</p>
-            <p class="finale-choice__value" id="final-gift-title">Waiting for your choice.</p>
-            <p class="finale-choice__copy" id="final-gift-copy"></p>
+          <div class="rose-stage" aria-hidden="true">
+            <span class="finale-rose" id="finale-rose">🌹</span>
+            <div class="rings">
+              <span class="ring r1"></span>
+              <span class="ring r2"></span>
+            </div>
           </div>
 
-          <div class="finale-gallery">
-            <figure class="finale-gallery__item">
-              <img src="assets/pic1.jpeg" alt="Illustrated portrait of Kanchi and me" />
-            </figure>
-            <figure class="finale-gallery__item">
-              <img src="assets/pic2.jpeg" alt="Smiling photo of Kanchi and me" />
-            </figure>
-            <figure class="finale-gallery__item">
-              <img src="assets/pic3.jpeg" alt="Kanchi in a pink saree" />
-            </figure>
+          <div class="finale-copy">
+            <p class="eyebrow">Your heart chose this.</p>
+            <h2 class="finale-title">
+              Because that's<br/><em>always you.</em>
+            </h2>
+
+            <div class="gift-reveal" id="gift-reveal">
+              <p class="gift-reveal-label">You chose</p>
+              <p class="gift-reveal-name" id="finale-gift-name">—</p>
+              <p class="gift-reveal-desc" id="finale-gift-desc"></p>
+            </div>
+
+            <p class="finale-sign">
+              Happy birthday, my love.<br/>
+              I love you, quietly and completely.
+            </p>
           </div>
 
-          <p class="finale-signoff">Happy Birthday, Kanchi.</p>
-          <button id="replay-btn" class="secondary-btn" type="button">Start again</button>
+          <div class="fin-photos" aria-hidden="true">
+            <figure class="fin-photo"><img src="assets/pic1.jpeg" alt="Our sketch" loading="lazy" /></figure>
+            <figure class="fin-photo"><img src="assets/pic2.jpeg" alt="Us" loading="lazy" /></figure>
+            <figure class="fin-photo"><img src="assets/pic3.jpeg" alt="You" loading="lazy" /></figure>
+          </div>
+
+          <button id="replay-btn" class="btn-ghost" type="button">Watch it again</button>
+
         </div>
       </div>
     </section>
+
+    <!-- ════ SCENE 5: ALREADY OPENED ════ -->
+    <section id="scene-opened" class="scene" aria-label="You already opened your surprise">
+      <div class="scene-frame">
+        <div class="opened-wrap">
+
+          <div class="rose-stage" aria-hidden="true">
+            <span class="finale-rose">🌹</span>
+            <div class="rings">
+              <span class="ring r1"></span>
+              <span class="ring r2"></span>
+            </div>
+          </div>
+
+          <p class="eyebrow">You came back.</p>
+          <h2 class="opened-title">
+            You already<br/><em>opened your surprise.</em>
+          </h2>
+          <p class="opened-sub">You chose…</p>
+
+          <div class="gift-reveal">
+            <p class="gift-reveal-label">Your gift</p>
+            <p class="gift-reveal-name" id="opened-gift-name">—</p>
+            <p class="gift-reveal-desc" id="opened-gift-desc"></p>
+          </div>
+
+          <button id="opened-replay-btn" class="btn-ghost" type="button">Open it again</button>
+
+          <p class="opened-footer">I love you. Still and always. 🌹</p>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <audio id="bg-music" preload="auto" loop>
     <source src="assets/happy-birthday-song.mp3" type="audio/mpeg" />
   </audio>
+
+  <div id="gift-preview-modal" class="gift-preview-modal" aria-hidden="true">
+    <div class="gift-preview-backdrop" data-close-preview="true"></div>
+    <div class="gift-preview-shell" role="dialog" aria-modal="true" aria-labelledby="gift-preview-title" aria-describedby="gift-preview-desc">
+      <button id="gift-preview-close" class="gift-preview-close" type="button" aria-label="Close gift preview">×</button>
+
+      <div class="gift-preview-orb" aria-hidden="true">
+        <span class="gift-preview-rose">🌹</span>
+        <div class="rings">
+          <span class="ring r1"></span>
+          <span class="ring r2"></span>
+        </div>
+      </div>
+
+      <div class="gift-preview-copy">
+        <p id="gift-preview-kicker" class="gift-preview-kicker">One Choice Only</p>
+        <h3 id="gift-preview-title" class="gift-preview-title">Open this box?</h3>
+        <p id="gift-preview-desc" class="gift-preview-desc">Once you open one box, the other two stay sealed. Make sure this is the one you want.</p>
+        <p class="gift-preview-note">Only this box will open. The others stay closed.</p>
+      </div>
+
+      <div class="gift-preview-actions">
+        <button id="gift-preview-confirm" class="btn-primary" type="button">Open this box</button>
+        <button id="gift-preview-cancel" class="btn-ghost" type="button">Back to boxes</button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
