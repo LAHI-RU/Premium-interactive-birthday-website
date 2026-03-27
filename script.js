@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    CONFIG â€” edit these to personalize
@@ -64,6 +64,7 @@ const el = {
 
   replayBtn:      $("#replay-btn"),
   openedReplayBtn: $("#opened-replay-btn"),
+  loveLetters:    $$(".love-letter"),
   giftPreviewModal: $("#gift-preview-modal"),
   giftPreviewClose: $("#gift-preview-close"),
   giftPreviewCancel: $("#gift-preview-cancel"),
@@ -463,6 +464,7 @@ function onGiftsEnter() {
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function onFinaleEnter() {
   launchConfetti();
+  resetLoveLetters();
 
   // Re-trigger rose float animation
   if (el.finaleRose) {
@@ -470,6 +472,25 @@ function onFinaleEnter() {
     void el.finaleRose.offsetWidth;
     el.finaleRose.style.animation = "";
   }
+}
+
+function setLoveLetterOpen(letter, open) {
+  if (!letter) return;
+  letter.classList.toggle("is-open", open);
+  letter.setAttribute("aria-expanded", String(open));
+}
+
+function resetLoveLetters() {
+  el.loveLetters.forEach((letter) => setLoveLetterOpen(letter, false));
+}
+
+function toggleLoveLetter(letter) {
+  if (!letter) return;
+
+  const shouldOpen = !letter.classList.contains("is-open");
+  el.loveLetters.forEach((item) => {
+    setLoveLetterOpen(item, item === letter ? shouldOpen : false);
+  });
 }
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -523,7 +544,7 @@ async function startMusic() {
   el.bgMusic.volume = CONFIG.musicVolume;
   try {
     await el.bgMusic.play();
-    setMusicUI(true, "Song is playing ðŸŽ¶");
+    setMusicUI(true, "Song is playing");
   } catch (_) {
     setMusicUI(false, "Tap 'Play Song' to hear our song.");
   }
@@ -704,6 +725,7 @@ function resetAll() {
   setGiftBoxesLocked(false);
   el.msgLines.forEach((l) => l.classList.remove("is-visible"));
   resetGiftBoxOrder();
+  resetLoveLetters();
   closeGiftPreview({ restoreFocus: false });
 
   if (el.confettiLayer) el.confettiLayer.innerHTML = "";
@@ -745,7 +767,9 @@ function bindEvents() {
     });
   });
 
-  // Confirm gift â†’ Finale
+  el.loveLetters.forEach((letter) => {
+    letter.addEventListener("click", () => toggleLoveLetter(letter));
+  });
 
   // Preview modal
   el.giftPreviewClose?.addEventListener("click", () => closeGiftPreview());
